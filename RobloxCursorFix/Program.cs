@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
 using System.Threading;
@@ -16,7 +16,7 @@ class RobloxCursorFix
     // Constants
     const int SM_CXSCREEN = 0;
     const int SM_CYSCREEN = 1;
-    const int VK_SHIFT = 0x10;
+    const int VK_OEM_3 = 0xC0; // Backtick (`) / tilde key
     const uint MOUSEEVENTF_RIGHTDOWN = 0x0008;
     const uint MOUSEEVENTF_RIGHTUP = 0x0010;
     const int SW_HIDE = 0;
@@ -28,8 +28,8 @@ class RobloxCursorFix
 
     static void Main()
     {
-        Console.WriteLine("SHIFT toggle cursor lock started.");
-        Console.WriteLine("Press SHIFT to toggle ON/OFF.");
+        Console.WriteLine("Backtick (`) toggle cursor lock started");
+        Console.WriteLine("Press ` to toggle ON/OFF");
 
         try
         {
@@ -68,9 +68,9 @@ class RobloxCursorFix
 
         while (running)
         {
-            bool shiftPressed = (GetAsyncKeyState(VK_SHIFT) & 0x8000) != 0;
+            bool backtickPressed = (GetAsyncKeyState(VK_OEM_3) & 0x8000) != 0;
 
-            if (shiftPressed && !lastState)
+            if (backtickPressed && !lastState)
             {
                 enabled = !enabled;
 
@@ -84,7 +84,7 @@ class RobloxCursorFix
                 }
             }
 
-            lastState = shiftPressed;
+            lastState = backtickPressed;
             Thread.Sleep(50);
         }
     }
